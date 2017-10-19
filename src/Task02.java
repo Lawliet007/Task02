@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
- * 
+ *
  * @author Davka
  *
  */
@@ -27,7 +27,7 @@ public class Task02 {
 
 		tokens(input);
 		boolean bools = check(input,operators);
-		
+
 		if(bools == false) {
 			for(int i = 0; i <operators.length - 1; i++) {
 				regex5 = regex5 + regex4;
@@ -41,7 +41,7 @@ public class Task02 {
 				System.out.println(-1);
 			}
 		}
-		
+
 		else {
 			int[] number = new int[numbers.length];
 			for(int i = 0; i < numbers.length; i++) {
@@ -66,19 +66,18 @@ public class Task02 {
 			System.out.println("final result is: " + calcute(rational,operator));
 		}
 	}
-	
+
 	public static boolean check(String input, String[] operators) {
 		for(int i = 0; i <operators.length - 1; i++) {
 			regex1 = regex1 + regex3;
 		}
 		pattern = Pattern.compile(regex1);
-		matcher = pattern.matcher(input);	
+		matcher = pattern.matcher(input);
 		return matcher.matches();
 	}
 
 	public static Rational calcute(ArrayList<Rational> rational, ArrayList<String> operator) {
-		boolean boo = true;
-		while(boo == true) {
+		while(operator.contains("*") || operator.contains("/")) {
 			for(int i = 1; i < operator.size(); i++) {
 				if(operator.get(i).equals("*")) {
 					rational.set(i-1, rational.get(i-1).multiply(rational.get(i)));
@@ -86,18 +85,17 @@ public class Task02 {
 					operator.remove(i);
 				}
 				else if(operator.get(i).equals("/")) {
-					rational.set(i-1, rational.get(i-1).divide(rational.get(i))); 
+					rational.set(i-1, rational.get(i-1).divide(rational.get(i)));
 					rational.remove(i);
 					operator.remove(i);
 				}
 			}
-			boo = false;
 		}
 
-		while(rational.size() != 1) {		
+		while(operator.contains("+")) {
 			for(int i = 0; i < operator.size(); i++) {
 				if(operator.get(i).equals("+")) {
-					rational.set(i-1, rational.get(i-1).add(rational.get(i))); 
+					rational.set(i-1, rational.get(i-1).add(rational.get(i)));
 					rational.remove(i);
 					operator.remove(i);
 				}
